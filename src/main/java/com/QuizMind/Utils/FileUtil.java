@@ -18,7 +18,6 @@ public class FileUtil {
                     StandardOpenOption.CREATE,
                     StandardOpenOption.TRUNCATE_EXISTING
             );
-            System.out.println("JSON saved to file: " + fileName);
         } catch (IOException e) {
             System.err.println("Error saving JSON to file: " + e.getMessage());
         }

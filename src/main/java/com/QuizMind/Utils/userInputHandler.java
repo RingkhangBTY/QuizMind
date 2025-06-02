@@ -11,9 +11,10 @@ public class userInputHandler {
 
     private String prompt;
 
+    private Scanner sc = new Scanner(System.in);
+
     //Take user input to generate prompt
     private void getUserInput(){
-        Scanner sc = new Scanner(System.in);
 
         try {
             System.out.println("1. Enter the programming language / subject: ");
@@ -22,11 +23,12 @@ public class userInputHandler {
             shortDes_Topic_Concepts = sc.nextLine();
             System.out.println("3.Choose level of test: (1.Beginner 2.Intermediate 3.Advanced)");
             while (true){
-                if (sc.nextInt()==1){
+                int temp = sc.nextInt();
+                if (temp==1){
                     level= "beginner"; break;
-                } else if (sc.nextInt()==2) {
+                } else if (temp ==2) {
                     level = "intermediate"; break;
-                } else if (sc.nextInt()==3) {
+                } else if (temp==3) {
                     level= "advanced"; break;
                 }else {
                     System.out.println("Wrong input plz try again!!! ( Choose between 1-3 )");
@@ -40,12 +42,11 @@ public class userInputHandler {
 
         }catch (InputMismatchException e){
             System.out.println("Error: "+ e.getMessage());
-        }finally {
-            sc.close();
         }
     }
 
 
+    // creating prompt
     public String getPrompt(){
 
         getUserInput();
@@ -56,7 +57,8 @@ public class userInputHandler {
                 "with difficulty level: \"" + level + "\". " +
                 "Each question should have exactly 4 distinct options labeled as optionA, optionB, optionC, and optionD. " +
                 "The correct answer should be provided as the exact text of the correct option (not just the letter). " +
-                "Return the output in the following strict JSON format, and do not include any explanation or extra text before or after the JSON:\n\n" +
+                "Return the output in the following strict JSON format, and do not include any explanation or extra text " +
+                "before or after the JSON:\n\n" +
                 "{\n" +
                 "  \"questions\": [\n" +
                 "    {\n" +
@@ -76,4 +78,28 @@ public class userInputHandler {
         return prompt;
     }
 
+    public String userAns(){
+
+        try {
+            while (true){
+                System.out.print("Your ans (A/B/C/D): ");
+                String ans = sc.nextLine();
+
+                if (ans.equalsIgnoreCase("A") ||
+                        ans.equalsIgnoreCase("B")||
+                        ans.equalsIgnoreCase("C") ||
+                        ans.equalsIgnoreCase("D")){
+                    return ans;
+                }else {
+                    System.out.println("Invalid input plz enter between (A/B/C/D).");
+                }
+
+            }
+
+        }catch (InputMismatchException e){
+            System.out.println("Error: "+e.getMessage());
+        }
+
+        return null;
+    }
 }
