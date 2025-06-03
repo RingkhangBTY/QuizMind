@@ -35,13 +35,4 @@ public class Questions {
         return answer;
     }
 
-    @Override
-    public String toString() {
-        return "Questions{" +
-                "optionsA='" + optionA + '\'' +
-                ", optionsB='" + optionB + '\'' +
-                ", optionsC='" + optionC + '\'' +
-                ", optionsD='" + optionD + '\'' +
-                '}';
-    }
 }
