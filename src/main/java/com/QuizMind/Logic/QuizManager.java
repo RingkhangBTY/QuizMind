@@ -14,9 +14,18 @@ public class QuizManager {
     private int correctAns;
     private int totalQuestion;
 
+    GeminiService geminiService = null;
+    userInputHandler userInputHandler = null;
+
+    public QuizManager(){
+        geminiService = new GeminiService();
+        userInputHandler = new userInputHandler();
+
+    }
+
     public void start() {
-        GeminiService geminiService = new GeminiService();
-        userInputHandler userInputHandler = new userInputHandler();
+//        GeminiService geminiService = new GeminiService();
+//        userInputHandler userInputHandler = new userInputHandler();
 
         FileUtil fileUtil = new FileUtil();
         fileUtil.saveJsonToFile(geminiService.getResponse());
@@ -37,7 +46,7 @@ public class QuizManager {
             System.out.println("C. "+q.getOptionC());
             System.out.println("D. "+q.getOptionD());
             String ans = userInputHandler.userAns().toUpperCase();
-            System.out.println("Correct ans: "+q.getAnswer());
+            System.out.println("Correct ans: "+userInputHandler.correctAnsOption(q)+": "+q.getAnswer());
             switch (ans){
                 case "A":
                     if (isCorrect(q.getOptionA(),q.getAnswer())) correctAns++;
@@ -61,13 +70,16 @@ public class QuizManager {
     }
 
 
-    public void displayScore() {
+    public boolean displayScore() {
         System.out.println("-----Your core card-----");
         System.out.println("Total questions: "+ totalQuestion);
         System.out.println("Correct answer: "+ correctAns);
         float accuracy = ((float) correctAns/totalQuestion)*100;
         System.out.printf("Your accuracy: %.2f \n", accuracy);
         System.out.println("You score "+correctAns+" out of "+totalQuestion);
+        System.out.println("\n Want to continue?...(Y/N)");
+
+        return userInputHandler.contResponse();
     }
 
     private boolean isCorrect(String userAns, String correctAns){

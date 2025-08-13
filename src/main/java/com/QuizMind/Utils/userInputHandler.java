@@ -1,5 +1,6 @@
 package com.QuizMind.Utils;
 
+import com.QuizMind.Model.Questions;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -9,9 +10,7 @@ public class userInputHandler {
     private String level;
     private int noOfQ;
 
-    private String prompt;
-
-    private Scanner sc = new Scanner(System.in);
+    private final Scanner sc = new Scanner(System.in);
 
     //Take user input to generate prompt
     private void getUserInput(){
@@ -21,7 +20,7 @@ public class userInputHandler {
             programmingLanguage_Subject = sc.nextLine();
             System.out.println("2. Enter short description about your subject knowledge/topic/concepts: ");
             shortDes_Topic_Concepts = sc.nextLine();
-            System.out.println("3.Choose level of test: (1.Beginner 2.Intermediate 3.Advanced)");
+            System.out.println("3.Choose level of test: (1.Beginner 2.Intermediate 3.Advanced 4. Pro mode)");
             while (true){
                 int temp = sc.nextInt();
                 if (temp==1){
@@ -30,7 +29,9 @@ public class userInputHandler {
                     level = "intermediate"; break;
                 } else if (temp==3) {
                     level= "advanced"; break;
-                }else {
+                } else if (temp == 4) {
+                    level = "more hard and advance"; break;
+                } else {
                     System.out.println("Wrong input plz try again!!! ( Choose between 1-3 )");
                 }
             }
@@ -51,7 +52,7 @@ public class userInputHandler {
 
         getUserInput();
 
-        prompt = "Hi, please generate " + noOfQ + " multiple-choice questions (MCQs) for the subject or " +
+        return "Hi, please generate " + noOfQ + " multiple-choice questions (MCQs) for the subject or " +
                 "programming language: \"" + programmingLanguage_Subject + "\" " +
                 "based on the topic/concepts: \"" + shortDes_Topic_Concepts + "\" " +
                 "with difficulty level: \"" + level + "\". " +
@@ -60,6 +61,7 @@ public class userInputHandler {
                 "Return the output in the following strict JSON format, and do not include any explanation or extra text " +
                 "before or after the JSON:\n\n" +
                 "{\n" +
+
                 "  \"questions\": [\n" +
                 "    {\n" +
                 "      \"question\": \"<Question text>\",\n" +
@@ -71,11 +73,8 @@ public class userInputHandler {
                 "    }\n" +
                 "  ]\n" +
                 "}\n\n" +
-                "Please ensure the questions are clear, relevant to the topic, and all options are distinct and plausible."
-        ;
-
-
-        return prompt;
+                "Please ensure the questions are clear, relevant to the topic, and all options are distinct and plausible," +
+                "And tried to make the options a bit tricky and ask the questions in a bit different ways.";
     }
 
     public String userAns(){
@@ -101,5 +100,41 @@ public class userInputHandler {
         }
 
         return null;
+    }
+
+    public String correctAnsOption(Questions q){
+        String ans = q.getAnswer();
+        if (q.getOptionA().equalsIgnoreCase(ans)){
+            return "A";
+        } else if (q.getOptionB().equalsIgnoreCase(ans)) {
+            return "B";
+        } else if (q.getOptionC().equalsIgnoreCase(ans)) {
+            return "C";
+        } else if (q.getOptionD().equalsIgnoreCase(ans)) {
+            return "D";
+        }
+
+        return null;
+    }
+
+    public boolean contResponse() {
+        try {
+            String response = sc.nextLine();
+            if (response.equalsIgnoreCase("Y")||
+                    response.equalsIgnoreCase("yes")) {
+
+                System.out.println("------------------------------\n");
+                return true;
+            }
+            if (response.equalsIgnoreCase("exit") ||
+                    response.equalsIgnoreCase("n")||
+                    response.equalsIgnoreCase("no") ){
+                System.out.println("-----Thanks for using Quiz Mind🙏-----");
+                return false;
+            }
+        }catch (InputMismatchException e){
+            System.out.println(e.getMessage());
+        }
+        return false;
     }
 }

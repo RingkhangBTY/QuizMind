@@ -1,0 +1,20 @@
+{
+  "questions": [
+    {
+      "question": "Consider a method defined as `public int calculate(int a, Integer b)`. Which of the following method signatures would overload this method correctly?",
+      "optionA": "public Integer calculate(int x, int y)",
+      "optionB": "private int calculate(int p, Integer q)",
+      "optionC": "public double calculate(double a, double b)",
+      "optionD": "public int calculate(Integer a, int b)",
+      "answer": "public int calculate(Integer a, int b)"
+    },
+    {
+      "question": "In Java, what is the primary difference between a static method and an instance method?",
+      "optionA": "Static methods can only access static variables, while instance methods can only access instance variables.",
+      "optionB": "Static methods are associated with the class and can be called without creating an object, while instance methods require an object instance to be invoked.",
+      "optionC": "Static methods can be overridden in subclasses, while instance methods cannot.",
+      "optionD": "Static methods are always final, while instance methods are not.",
+      "answer": "Static methods are associated with the class and can be called without creating an object, while instance methods require an object instance to be invoked."
+    }
+  ]
+}
